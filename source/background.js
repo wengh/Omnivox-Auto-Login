@@ -1,26 +1,29 @@
-import { Common } from "common.js";
+/*globals $:false */
+/*globals chrome:false */
 
-async function autoLogin() {
+import {Common} from './common.js';
+
+function autoLogin() {
 	chrome.storage.local.get(null, function (data) {
 		if (data.content === undefined) {
-			console.log("Login info not registered, please log out and log in again");
+			console.log('Login info not registered, please log out and log in again');
 			return;
 		}
 
-		console.log("Logged in at " + getDateString());
+		console.log('Logged in at ' + getDateString());
 
 		data.content.k = Common.getK();
 
 		fetch(
-			"https://" +
-				data.hostname +
-				"/intr/Module/Identification/Login/Login.aspx",
+			'https://' +
+			data.hostname +
+			'/intr/Module/Identification/Login/Login.aspx',
 			{
-				method: "POST",
+				method: 'POST',
 				body: $.param(data.content),
 				headers: {
-					"Content-Type": "application/x-www-form-urlencoded",
-				},
+					'Content-Type': 'application/x-www-form-urlencoded'
+				}
 			}
 		);
 	});
@@ -33,7 +36,7 @@ let ovxTabs = new Set();
 (function () {
 	chrome.tabs.query(
 		{
-			url: "*://*.omnivox.ca/*",
+			url: '*://*.omnivox.ca/*'
 		},
 		function (tabs) {
 			tabs.forEach(function (tab) {
@@ -47,11 +50,11 @@ let ovxTabs = new Set();
 		lastUpdateTime = Date.now();
 	}
 
-	chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-		if (changeInfo.url == undefined) {
+	chrome.tabs.onUpdated.addListener(function (tabId, changeInfo) {
+		if (changeInfo.url === undefined) {
 			// do nothing
-		} else if (new URL(changeInfo.url).hostname.includes("omnivox.ca")) {
-			if (ovxTabs.size == 0) {
+		} else if (new URL(changeInfo.url).hostname.includes('omnivox.ca')) {
+			if (ovxTabs.size === 0) {
 				autoLogin();
 				lastUpdateTime = Date.now();
 			}

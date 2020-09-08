@@ -1,7 +1,11 @@
+/*globals $:false */
+
+/*globals chrome:false */
+
 export class Common {
 	static getDateString(date = new Date()) {
 		// sv-SE seems to be similar to ISO 8601
-		return date.toLocaleString("sv-SE");
+		return date.toLocaleString('sv-SE');
 	}
 
 	static getK() {
@@ -29,8 +33,8 @@ export class Common {
 	}
 
 	static displayNothing() {
-		var style = document.createElement("style");
-		style.innerHTML = "body { display:none !important; }";
-		document.getElementsByTagName("HEAD")[0].appendChild(style);
+		var style = document.createElement('style');
+		style.innerHTML = 'body { display:none !important; }';
+		document.getElementsByTagName('HEAD')[0].appendChild(style);
 	}
 }
