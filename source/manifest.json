@@ -6,26 +6,22 @@
 	"manifest_version": 2,
 	"minimum_chrome_version": "74",
 	"icons": {
-	  "16": "icon16.png",
-	  "32": "icon32.png",
-	  "48": "icon48.png",
-	  "128": "icon128.png"
+		"16": "icon16.png",
+		"32": "icon32.png",
+		"48": "icon48.png",
+		"128": "icon128.png"
 	},
-	"permissions": [
-		"tabs",
-		"storage",
-		"*://*.omnivox.ca/Login/Account/Login*"
-	],
+	"permissions": ["tabs", "storage", "*://*.omnivox.ca/Login/Account/Login*"],
 	"background": {
-	  "scripts": ["jquery.min.js", "common.js", "background.js"]
+		"scripts": ["jquery.min.js", "common.js", "background.js"]
 	},
 	"content_scripts": [
-	  {
-		"js": ["jquery.min.js", "common.js", "content.js"],
-		"run_at": "document_idle",
-		"matches": ["*://*.omnivox.ca/Login/Account/Login*"],
-		"all_frames": true,
-		"match_about_blank": true
-	  }
+		{
+			"js": ["jquery.min.js", "common.js", "content.js"],
+			"run_at": "document_idle",
+			"matches": ["*://*.omnivox.ca/Login/Account/Login*"],
+			"all_frames": true,
+			"match_about_blank": true
+		}
 	]
 }
