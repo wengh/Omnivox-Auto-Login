@@ -4,6 +4,7 @@ import {Common} from './common.js';
 	// we don't want to run in iframe
 	if (window.top !== window.self) return;
 
+	// get all data
 	chrome.storage.local.get(null, function (data) {
 		// automatically fill login info and submit
 		if (data.hostname === location.hostname) {
@@ -34,7 +35,7 @@ import {Common} from './common.js';
 			}
 		}
 
-		// capture login info otherwise
+		// capture login info if timeout or no data recorded
 		console.log('We\'re on login page, record login info');
 		data.hostname = location.hostname;
 		document.forms[0].onsubmit = function () {

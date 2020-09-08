@@ -7,14 +7,13 @@ function autoLogin() {
 			return;
 		}
 
-		console.log('Logged in at ' + getDateString());
+		console.log('Logged in at ' + Common.getDateString());
 
 		data.content.k = Common.getK();
 
+		// now POST to omnivox the login form to hopefully stay logged in
 		fetch(
-			'https://' +
-			data.hostname +
-			'/intr/Module/Identification/Login/Login.aspx',
+			`https://${data.hostname}/intr/Module/Identification/Login/Login.aspx`,
 			{
 				method: 'POST',
 				body: $.param(data.content),
@@ -30,7 +29,8 @@ const interval = 600000;
 let lastUpdateTime = 0;
 let ovxTabs = new Set();
 
-(function () {
+function setupTabChecks() {
+	// first find all omnivox tabs and add them to the set
 	chrome.tabs.query(
 		{
 			url: '*://*.omnivox.ca/*'
@@ -42,29 +42,43 @@ let ovxTabs = new Set();
 		}
 	);
 
+	// login if there's at least 1 omnivox tab
 	if (ovxTabs.size > 0) {
 		autoLogin();
 		lastUpdateTime = Date.now();
 	}
 
+	// check for changed tabs
 	chrome.tabs.onUpdated.addListener(function (tabId, changeInfo) {
 		if (changeInfo.url === undefined) {
 			// do nothing
 		} else if (new URL(changeInfo.url).hostname.includes('omnivox.ca')) {
+			// it is a omnivox tab
+			// login if there was no omnivox tab
 			if (ovxTabs.size === 0) {
 				autoLogin();
 				lastUpdateTime = Date.now();
 			}
 			ovxTabs.add(tabId);
 		} else if (ovxTabs.has(tabId)) {
+			// it is no longer a omnivox tab
 			ovxTabs.delete(tabId);
 		}
 	});
 
+	// check deleted tabs
 	chrome.tabs.onRemoved.addListener(function (tabId) {
 		ovxTabs.delete(tabId);
 	});
+}
 
+(function () {
+	// setup automatic login
+
+	setupTabChecks();
+
+	// we want real time to correctly behave when the computer goes to sleep
+	// so do a check every second and use Date.now() which returns millis since epoch
 	setInterval(function () {
 		let now = Date.now();
 		if (now - lastUpdateTime > interval && ovxTabs.size > 0) {
