@@ -1,5 +1,6 @@
 const path = require('path');
 const SizePlugin = require('size-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
@@ -15,7 +16,14 @@ module.exports = {
 		filename: '[name].js'
 	},
 	plugins: [
-		new SizePlugin()
+		new SizePlugin(),
+		new CopyWebpackPlugin([
+			{
+				from: '**/*',
+				context: 'source',
+				ignore: ['*.js']
+			}
+		])
 	],
 	optimization: {
 		minimizer: [
