@@ -1,10 +1,6 @@
 {
 	"private": true,
 	"scripts": {
-		"lint": "run-p lint:*",
-		"lint:js": "xo",
-		"lint:css": "stylelint source/**/*.css",
-		"lint-fix": "run-p 'lint:* -- --fix'",
 		"test": "run-s lint:* build",
 		"build": "webpack --mode=production",
 		"watch": "webpack --mode=development --watch",
@@ -18,8 +14,6 @@
 		"copy-webpack-plugin": "^5.0.3",
 		"daily-version": "^0.12.0",
 		"dot-json": "^1.1.0",
-		"eslint": "^6.1.0",
-		"eslint-config-xo": "^0.26.0",
 		"npm-run-all": "^4.1.5",
 		"size-plugin": "^1.2.0",
 		"stylelint": "^10.1.0",

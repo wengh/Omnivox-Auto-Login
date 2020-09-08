@@ -1,6 +1,3 @@
-/*globals $:false */
-/*globals chrome:false */
-
 import {Common} from './common.js';
 
 (function () {

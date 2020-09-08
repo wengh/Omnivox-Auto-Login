@@ -1,7 +1,3 @@
-/*globals $:false */
-
-/*globals chrome:false */
-
 export class Common {
 	static getDateString(date = new Date()) {
 		// sv-SE seems to be similar to ISO 8601
