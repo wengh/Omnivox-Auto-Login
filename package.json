@@ -28,23 +28,7 @@
 		"web-ext": "^4.1.0",
 		"web-ext-submit": "^4.1.0",
 		"webpack": "^4.36.1",
-		"webpack-cli": "^3.3.6",
-		"xo": "^0.24.0"
-	},
-	"dependencies": {
-		"webext-options-sync": "^0.21.2",
-		"webextension-polyfill": "^0.4.0"
-	},
-	"xo": {
-		"envs": [
-			"browser"
-		],
-		"ignores": [
-			"distribution"
-		],
-		"globals": [
-			"browser"
-		]
+		"webpack-cli": "^3.3.6"
 	},
 	"stylelint": {
 		"extends": "stylelint-config-xo"
