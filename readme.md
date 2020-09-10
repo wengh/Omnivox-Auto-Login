@@ -1,6 +1,6 @@
 Omnivox Auto Login
 -----
-Chrome extension
+[Chrome Web Store](https://chrome.google.com/webstore/detail/omnivox-auto-login/hgfkplmfplbengfckpbbiedicnnlgekf)
 
 Keep logged in on Omnivox.
 

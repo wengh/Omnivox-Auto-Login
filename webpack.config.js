@@ -9,7 +9,8 @@ module.exports = {
 	entry: {
 		background: './source/background',
 		content: './source/content',
-		common: './source/common'
+		common: './source/common',
+		jquery: './source/jquery.min'
 	},
 	output: {
 		path: path.join(__dirname, 'distribution'),
