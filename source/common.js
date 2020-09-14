@@ -19,8 +19,8 @@ export class Common {
 	// f is $('form')
 	// return the form values as json
 	static serializeForm(f) {
-		let array = f.serializeArray();
-		let map = {};
+		const array = f.serializeArray();
+		const map = {};
 		array.forEach(function (item) {
 			map[item.name] = item.value;
 		});
@@ -29,7 +29,7 @@ export class Common {
 
 	// fill the form with serialized json
 	static deserializeForm(f, map) {
-		for (var key in map) {
+		for (const key in map) {
 			if (!map.hasOwnProperty(key)) continue;
 			$('[name="' + key + '"]').val(map[key]);
 		}
@@ -37,7 +37,7 @@ export class Common {
 
 	// make the page show nothing
 	static displayNothing() {
-		var style = document.createElement('style');
+		const style = document.createElement('style');
 		style.innerHTML = 'body { display:none !important; }';
 		document.getElementsByTagName('HEAD')[0].appendChild(style);
 	}

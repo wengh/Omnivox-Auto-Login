@@ -27,7 +27,7 @@ function autoLogin() {
 
 const interval = 600000;
 let lastUpdateTime = 0;
-let ovxTabs = new Set();
+const ovxTabs = new Set();
 
 function setupTabChecks() {
 	// first find all omnivox tabs and add them to the set
