@@ -13,11 +13,11 @@
 	},
 	"permissions": ["tabs", "storage", "*://*.omnivox.ca/Login/Account/Login*"],
 	"background": {
-		"scripts": ["jquery.min.js", "common.js", "background.js"]
+		"scripts": ["jquery.js", "common.js", "background.js"]
 	},
 	"content_scripts": [
 		{
-			"js": ["jquery.min.js", "common.js", "content.js"],
+			"js": ["jquery.js", "common.js", "content.js"],
 			"run_at": "document_idle",
 			"matches": ["*://*.omnivox.ca/Login/Account/Login*"],
 			"all_frames": true,
