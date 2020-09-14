@@ -10,7 +10,6 @@ import {Common} from './common.js';
 		if (data.hostname === location.hostname) {
 			const now = Date.now();
 			const lastAttempt = data.lastAttempt;
-			const form = $('form');
 
 			if (lastAttempt !== undefined && now - lastAttempt < 5000) {
 				// less than 10 seconds between 2 login attempts
@@ -28,9 +27,9 @@ import {Common} from './common.js';
 
 				console.log('Logging in...');
 				data.content.k = Common.getK();
-				Common.deserializeForm(form, data.content);
+				Common.deserializeForm($('form'), data.content);
 				console.log(data.content);
-				form.submit();
+				$('form').submit();
 				return;
 			}
 		}
@@ -38,7 +37,7 @@ import {Common} from './common.js';
 		// capture login info if timeout or no data recorded
 		console.log('We\'re on login page, record login info');
 		data.hostname = location.hostname;
-		form.submit(function () {
+		$('form').submit(function () {
 			data.content = Common.serializeForm($('form'));
 			delete data.content['k'];
 			chrome.storage.local.set(data);
