@@ -2,7 +2,7 @@
 	"name": "Omnivox Auto Login",
 	"version": "1.0.0",
 	"description": "Save password and automatically log in on *.omnivox.ca",
-	"homepage_url": "https://github.com/awesome-templates/browser-extension-template",
+	"homepage_url": "https://github.com/wengh/Omnivox-Auto-Login",
 	"manifest_version": 2,
 	"minimum_chrome_version": "74",
 	"icons": {
@@ -11,15 +11,15 @@
 		"48": "icon48.png",
 		"128": "icon128.png"
 	},
-	"permissions": ["tabs", "storage", "*://*.omnivox.ca/Login/Account/Login*"],
+	"permissions": ["storage", "*://*.omnivox.ca/*"],
 	"background": {
-		"scripts": ["jquery.js", "common.js", "background.js"]
+		"scripts": ["jquery.slim.min.js", "browser-polyfill.min.js", "background.js"]
 	},
 	"content_scripts": [
 		{
-			"js": ["jquery.js", "common.js", "content.js"],
+			"js": ["jquery.slim.min.js", "browser-polyfill.min.js", "content.js"],
 			"run_at": "document_idle",
-			"matches": ["*://*.omnivox.ca/Login/Account/Login*"],
+			"matches": ["*://*.omnivox.ca/*"],
 			"all_frames": true,
 			"match_about_blank": true
 		}

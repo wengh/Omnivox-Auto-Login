@@ -9,8 +9,7 @@ module.exports = {
 	entry: {
 		background: './source/background',
 		content: './source/content',
-		common: './source/common',
-		jquery: './source/jquery'
+		common: './source/common'
 	},
 	output: {
 		path: path.join(__dirname, 'distribution'),
@@ -23,6 +22,12 @@ module.exports = {
 				from: '**/*',
 				context: 'source',
 				ignore: ['*.js']
+			},
+			{
+				from: 'node_modules/webextension-polyfill/dist/browser-polyfill.min.js'
+			},
+			{
+				from: 'node_modules/jquery/dist/jquery.slim.min.js'
 			}
 		])
 	],

@@ -1,47 +1,57 @@
-import {Common} from './common.js';
+import {Common} from './common';
 
-(function () {
+(async function () {
 	// we don't want to run in iframe
 	if (window.top !== window.self) return;
 
+	if (!location.href.includes("/Login/Account/Login")) {
+		// we are not on the login page
+		setInterval(async function () {
+			let now = Date.now();
+			let data = await browser.storage.local.get();
+			data.time = now;
+			await browser.storage.local.set(data);
+		}, 60000); // say tell the background script that we are alive once every minute
+		return;
+	}
+
 	// get all data
-	chrome.storage.local.get(null, function (data) {
-		// automatically fill login info and submit
-		const form = $('form');
-		if (data.hostname === location.hostname) {
-			const now = Date.now();
-			const lastAttempt = data.lastAttempt;
+	let data = await browser.storage.local.get();
+	// automatically fill login info and submit
+	const form = $('form');
+	if (data.hostname === location.hostname) {
+		const now = Date.now();
+		const lastAttempt = data.lastAttempt;
 
-			if (lastAttempt !== undefined && now - lastAttempt < 5000) {
-				// less than 10 seconds between 2 login attempts
-				// probably the wrong password, clear everything
+		if (lastAttempt !== undefined && now - lastAttempt < 5000) {
+			// less than 10 seconds between 2 login attempts
+			// probably the wrong password, clear everything
 
-				alert(
-					'Login timeout, perhaps your password is wrong?\nCleared all saved information.'
-				);
+			alert(
+				'Login timeout, perhaps your password is wrong?\nCleared all saved information.'
+			);
 
-				chrome.storage.local.clear();
-			} else {
-				Common.displayNothing();
-				data.lastAttempt = now;
-				chrome.storage.local.set(data);
+			await browser.storage.local.clear();
+		} else {
+			Common.displayNothing();
+			data.lastAttempt = now;
+			await browser.storage.local.set(data);
 
-				console.log('Logging in...');
-				data.content.k = Common.getK();
-				Common.deserializeForm(form, data.content);
-				console.log(data.content);
-				form.submit();
-				return;
-			}
+			console.log('Logging in...');
+			data.content.k = Common.getK();
+			Common.deserializeForm(form, data.content);
+			console.log(data.content);
+			form.submit();
+			return;
 		}
+	}
 
-		// capture login info if timeout or no data recorded
-		console.log('We\'re on login page, record login info');
-		data.hostname = location.hostname;
-		form.submit(function () {
-			data.content = Common.serializeForm($('form'));
-			delete data.content['k'];
-			chrome.storage.local.set(data);
-		});
+	// capture login info if timeout or no data recorded
+	console.log('We\'re on login page, record login info');
+	data.hostname = location.hostname;
+	form.submit(async function () {
+		data.content = Common.serializeForm($('form'));
+		delete data.content['k'];
+		await browser.storage.local.set(data);
 	});
 })();
