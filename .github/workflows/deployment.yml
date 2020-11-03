@@ -33,7 +33,7 @@ jobs:
 
   Chrome:
     needs: Build
-    if: contains(github.event.commits[0].message, '[chrome]') && (github.event_name == 'push' || needs.Build.outputs.created)
+    if: contains(github.event.head_commit.message, '[chrome]') && (github.event_name == 'push' || needs.Build.outputs.created)
     runs-on: ubuntu-latest
     steps:
     - uses: actions/download-artifact@v2
