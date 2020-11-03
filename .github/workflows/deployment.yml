@@ -3,6 +3,7 @@ name: Deployment
 
 on:
   workflow_dispatch:
+  push:
     # You can manually trigger a deployment on GitHub.com
     # https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/
 #  schedule:
@@ -34,7 +35,7 @@ jobs:
 
   Chrome:
     needs: Build
-    if: contains(github.event.head_commit.message, '[chrome]') && (github.event_name == 'push' || needs.Build.outputs.created)
+    if: contains(github.event.head_commit.message, '[chrome]' || github.event_name != 'push') && needs.Build.outputs.created
     runs-on: ubuntu-latest
     steps:
     - uses: actions/download-artifact@v2
@@ -47,7 +48,7 @@ jobs:
 
   Firefox:
     needs: Build
-    if: contains(github.event.head_commit.message, '[firefox]') && (github.event_name == 'push' || needs.Build.outputs.created)
+    if: contains(github.event.head_commit.message, '[firefox]' || github.event_name != 'push') && needs.Build.outputs.created
     runs-on: ubuntu-latest
     steps:
     - uses: actions/download-artifact@v2
