@@ -9,11 +9,12 @@ export class Common {
 	// a and b are calculated from 2 requests to the login page with 2 hours interval
 	// should be accurate enough
 	static getK() {
-		//t1=1599507598.515297, k1=637350917992510779
+		//t1=1599507599, k1=637350917992510779
+		//t2=1604365152, k2=637399457523063487
 
-		const a = 10000;
-		const b = 621355842007357696;
-		return Date.now() * a + b;
+		const m = 9992.587977788404;
+		const k = 621367697593205504;
+		return Math.round(Date.now() * m) + k;
 	}
 
 	// f is $('form')
