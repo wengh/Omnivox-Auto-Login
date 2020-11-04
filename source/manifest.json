@@ -13,11 +13,11 @@
 	},
 	"permissions": ["storage", "*://*.omnivox.ca/*"],
 	"background": {
-		"scripts": ["jquery.slim.min.js", "browser-polyfill.min.js", "background.js"]
+		"scripts": ["jquery.slim.min.js", "browser-polyfill.min.js", "Common.js", "background.js"]
 	},
 	"content_scripts": [
 		{
-			"js": ["jquery.slim.min.js", "browser-polyfill.min.js", "content.js"],
+			"js": ["jquery.slim.min.js", "browser-polyfill.min.js", "Common.js", "content.js"],
 			"run_at": "document_idle",
 			"matches": ["*://*.omnivox.ca/*"],
 			"all_frames": true,
