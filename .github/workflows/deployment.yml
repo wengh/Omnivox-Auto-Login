@@ -35,7 +35,7 @@ jobs:
 
   Chrome:
     needs: Build
-    if: contains(github.event.head_commit.message, '[chrome]' || github.event_name != 'push') && needs.Build.outputs.created
+    if: (contains(github.event.head_commit.message, '[chrome]') || github.event_name != 'push') && needs.Build.outputs.created
     runs-on: ubuntu-latest
     steps:
     - uses: actions/download-artifact@v2
@@ -48,7 +48,7 @@ jobs:
 
   Firefox:
     needs: Build
-    if: contains(github.event.head_commit.message, '[firefox]' || github.event_name != 'push') && needs.Build.outputs.created
+    if: (contains(github.event.head_commit.message, '[firefox]') || github.event_name != 'push') && needs.Build.outputs.created
     runs-on: ubuntu-latest
     steps:
     - uses: actions/download-artifact@v2
