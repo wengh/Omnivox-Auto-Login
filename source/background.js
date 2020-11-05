@@ -32,9 +32,9 @@ let lastUpdateTime = 0;
 	// we want real time to correctly behave when the computer goes to sleep
 	// so do a check every second and use Date.now() which returns millis since epoch
 	setInterval(async function () {
-		const data = await browser.storage.local.get();
+		const time = (await browser.storage.local.get('time')).time;
 		let now = Date.now();
-		if ((now - lastUpdateTime > interval) && (now - data.time < 60000)) {
+		if ((now - lastUpdateTime > interval) && (now - time < 60000)) {
 			lastUpdateTime = now;
 			await autoLogin();
 		}

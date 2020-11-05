@@ -1,17 +1,17 @@
 import {Common} from './common';
 
+async function weAreAlive() {
+	await browser.storage.local.set({time: Date.now()});
+}
+
 (async function () {
 	// we don't want to run in iframe
 	if (window.top !== window.self) return;
 
 	if (!location.href.includes("/Login/Account/Login")) {
 		// we are not on the login page
-		setInterval(async function () {
-			let now = Date.now();
-			let data = await browser.storage.local.get();
-			data.time = now;
-			await browser.storage.local.set(data);
-		}, 60000); // say tell the background script that we are alive once every minute
+		await weAreAlive();
+		setInterval(weAreAlive, 60000); // tell the background script that we are alive once every minute
 		return;
 	}
 
