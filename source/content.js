@@ -38,7 +38,7 @@ async function weAreAlive() {
 			await browser.storage.local.set(data);
 
 			console.log('Logging in...');
-			data.content.k = Common.getK();
+			delete data.content.k;
 			Common.deserializeForm(form, data.content);
 			console.log(data.content);
 			form.submit();
