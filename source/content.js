@@ -15,6 +15,8 @@ async function weAreAlive() {
 		return;
 	}
 
+	let t2 = Date.now();
+
 	// get all data
 	let data = await browser.storage.local.get();
 	// automatically fill login info and submit
@@ -50,6 +52,8 @@ async function weAreAlive() {
 	data.hostname = location.hostname;
 	form.submit(async function () {
 		data.content = Common.serializeForm($('form'));
+		data.t2 = t2;
+		data.k2 = data.content['k'];
 		delete data.content['k'];
 		await browser.storage.local.set(data);
 	});

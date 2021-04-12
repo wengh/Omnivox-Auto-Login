@@ -6,15 +6,12 @@ export class Common {
 	}
 
 	// "k" in login form seems to be an integer related to the current time
-	// m and k are calculated from 2 requests to the login page with 2 hours interval
-	// should be accurate enough
-	static getK() {
-		//t1=1599507599, k1=637350917992510779
-		//t2=1604365152, k2=637399457523063487
-
-		const m = 9992.587977788404;
-		const k = 621367697593190000;
-		return Math.round(Date.now() * m) + k;
+	// m and b are extrapolated from 2 requests to the login page with a long enough interval
+	static getK(t2, k2) {
+		const t1=1599507599000, k1=637350917992510779
+		const m = (k2 - k1) / (t2 - t1);
+		const b = k2 - (m * t2);
+		return Math.round(Date.now() * m + b);
 	}
 
 	// f is $('form')

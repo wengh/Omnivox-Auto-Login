@@ -11,7 +11,7 @@
 	},
 	"dependencies": {
 		"webextension-polyfill": "^0.4.0",
-	  	"jquery": "^3.5.1"
+		"jquery": "^3.5.1"
 	},
 	"devDependencies": {
 		"chrome-webstore-upload-cli": "^1.2.0",
