@@ -9,7 +9,7 @@ async function autoLogin() {
 
 	console.log('Logged in at ' + Common.getDateString());
 
-	data.content.k = Common.getK(data.t2, data.k2);
+	data.content.k = Common.getK();
 
 	// now POST to omnivox the login form to hopefully stay logged in
 	fetch(

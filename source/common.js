@@ -5,13 +5,19 @@ export class Common {
 		return date.toLocaleString('sv-SE');
 	}
 
-	// "k" in login form seems to be an integer related to the current time
-	// m and b are extrapolated from 2 requests to the login page with a long enough interval
-	static getK(t2, k2) {
-		const t1=1599507599000, k1=637350917992510779
-		const m = (k2 - k1) / (t2 - t1);
-		const b = k2 - (m * t2);
-		return Math.round(Date.now() * m + b);
+	static getMontrealTimezoneOffsetMs(date = new Date()) {
+		return Date.parse(date.toLocaleString('sv-SE', {timeZone: 'America/Montreal'}))
+			 - Date.parse(date.toLocaleString('sv-SE', {timeZone: 'UTC'}));
+	}
+
+	// "k" in login form is a timestamp proportional to the time since year 0001
+	static getK(date = new Date) {
+		const ms_from_0001_to_1975 = 62135596800000;
+		const ms_timezone_offset = Common.getMontrealTimezoneOffsetMs(date);
+		const ms_extra_offset = 1800000; // determined experimentally
+		const m = 10000;
+		const b = (ms_from_0001_to_1975 + ms_timezone_offset + ms_extra_offset) * m;
+		return Math.round(m * date.getTime() + b);
 	}
 
 	// f is $('form')
