@@ -4,7 +4,7 @@ async function weAreAlive() {
 	await browser.storage.local.set({time: Date.now()});
 }
 
-(async function () {
+setTimeout(async function () {
 	// we don't want to run in iframe
 	if (window.top !== window.self) return;
 
@@ -53,4 +53,4 @@ async function weAreAlive() {
 		delete data.content['k'];
 		await browser.storage.local.set(data);
 	});
-})();
+}, 5000);
