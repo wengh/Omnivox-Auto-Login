@@ -17,7 +17,8 @@ async function autoLogin() {
 			body: $.param(data.content),
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
-			}
+			},
+			credentials: 'same-origin',
 		}
 	);
 
@@ -32,16 +33,10 @@ async function autoLogin() {
 const interval = 600000;
 let lastUpdateTime = 0;
 
-(function () {
-	// setup automatic login
-	// we want real time to correctly behave when the computer goes to sleep
-	// so do a check every second and use Date.now() which returns millis since epoch
-	setInterval(async function () {
-		const time = (await browser.storage.local.get('time')).time;
-		let now = Date.now();
-		if ((now - lastUpdateTime > interval) && (now - time < 60000)) {
-			lastUpdateTime = now;
-			await autoLogin();
-		}
-	}, 1000);
-})();
+browser.runtime.onMessage.addListener(() => {
+	const now = Date.now();
+	if (now - lastUpdateTime > interval) {
+		lastUpdateTime = now;
+		autoLogin();
+	}
+});

@@ -1,7 +1,7 @@
 import {Common} from './common';
 
 async function weAreAlive() {
-	await browser.storage.local.set({time: Date.now()});
+	await browser.runtime.sendMessage(1);
 }
 
 setTimeout(async function () {
@@ -11,7 +11,7 @@ setTimeout(async function () {
 	if (!location.href.includes("/Login/Account/Login")) {
 		// we are not on the login page
 		await weAreAlive();
-		setInterval(weAreAlive, 60000); // tell the background script that we are alive once every minute
+		setInterval(weAreAlive, 60100); // tell the background script that we are alive once every minute
 		return;
 	}
 
@@ -53,4 +53,4 @@ setTimeout(async function () {
 		delete data.content['k'];
 		await browser.storage.local.set(data);
 	});
-}, 5000);
+}, 0);
